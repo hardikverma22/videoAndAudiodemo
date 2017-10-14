@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         int currVol =audioManager.getStreamVolume(audioManager.STREAM_MUSIC);
 
         SeekBar volumeControl = (SeekBar)findViewById(R.id.seekBar);
+        SeekBar scrubber = (SeekBar)findViewById(R.id.scrubber);
+        scrubber.setMax(mediaPlayer.getDuration());
         volumeControl.setMax(maxVol);
         volumeControl.setProgress(currVol);
         volumeControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
@@ -49,6 +51,23 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.i("Seekbar changed",Integer.toString(progress));
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,progress,0);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        scrubber.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mediaPlayer.seekTo(progress);
             }
 
             @Override
